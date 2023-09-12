@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,34 +8,52 @@ datasource db {
 }
 
 model Finance {
-  id     String   @id @default(uuid()) @map("_id")
-  Users  User[]
-  Debit  Debit[]
-  Credit Credit[]
-  created_At DateTime @default(now())
-  updated_At DateTime @updatedAt
+  id     String  @id @default(uuid()) @map("_id")
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  FinanceData   FinanceData? @relation(fields: [financeDataId], references: [id])
+  financeDataId String?
 }
 
-model Credit {
-  id         String   @id @default(uuid()) @map("_id")
-  created_At DateTime @default(now())
-  updated_At DateTime @updatedAt
-  Finance    Finance? @relation(fields: [financeId], references: [id])
-  financeId  String?
-}
-
-model Debit {
-  id         String   @id @default(uuid()) @map("_id")
-  created_At DateTime @default(now())
-  updated_At DateTime @updatedAt
-  Finance    Finance? @relation(fields: [financeId], references: [id])
-  financeId  String?
+model FinanceData {
+  id      String    @id @default(uuid()) @map("_id")
+  store   String
+  value   Float
+  month   String
+  day     String
+  year    String
+  hour    String
+  minutes String
+  payment String
+  finance Finance[]
 }
 
 model User {
-  id String @id @default(uuid()) @map("_id")
-  Finance   Finance? @relation(fields: [financeId], references: [id])
-  financeId String?
-  created_At DateTime @default(now())
-  updated_At DateTime @updatedAt
+  id         String       @id @default(uuid()) @map("_id")
+  email      String       @unique
+  name       String
+  password   String
+  userAccess UserAccess[]
+  Finance    Finance[]
+  created_At DateTime     @default(now())
+  updated_At DateTime     @updatedAt
+}
+
+model UserAccess {
+  id         String   @id @default(uuid()) @map("_id")
+  User       User?    @relation(fields: [userId], references: [id])
+  userId     String?
+  Access     Access?  @relation(fields: [accessId], references: [id])
+  accessId   String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Access {
+  id         String       @id @default(uuid()) @map("_id")
+  name       String       @unique
+  userAccess UserAccess[]
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
 }
