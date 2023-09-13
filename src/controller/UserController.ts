@@ -5,23 +5,33 @@ import { hash } from "bcrypt";
 export class UserController {
   async create(req: Request, res: Response) {
     try {
-      const {name, email, password, accessName} = req.body
-      
-      const userExist = await prisma.user.findUnique({
-        where: {
-          email
-        }
-      })
+      const { name, email, password, accessName, cpf } = req.body;
 
-      if (userExist) {
-        return res.status(400).json({error: "User already exists"})
+      const emailExist = await prisma.user.findUnique({
+        where: {
+          email,
+        },
+      });
+
+      if (emailExist) {
+        return res.status(400).json({ error: "User already exists" });
+      }
+
+      const cpfExist = await prisma.user.findUnique({
+        where: {
+          cpf,
+        },
+      });
+
+      if (cpfExist) {
+        return res.status(400).json({ error: "CPF already exists" });
       }
 
       const access = await prisma.access.findUnique({
         where: {
-          name: accessName
-        }
-      }) 
+          name: accessName,
+        },
+      });
 
       if (!access) {
         return res
@@ -29,43 +39,48 @@ export class UserController {
           .json({ error: "This access level does not exist" });
       }
 
-      const hashedPassword = await hash(password, 8)
+      const hashedPassword = await hash(password, 8);
 
       const user = await prisma.user.create({
         data: {
-          email, password: hashedPassword, name, userAccess: {
+          cpf,
+          email,
+          password: hashedPassword,
+          name,
+          userAccess: {
             create: {
               Access: {
                 connect: {
-                  name: accessName
-                }
-              }
-            }
-          }
+                  name: accessName,
+                },
+              },
+            },
+          },
         },
         select: {
           id: true,
           name: true,
+          balance: true,
+          account: true,
           userAccess: {
             select: {
               Access: {
                 select: {
-                  name: true
-                }
-              }
-            }
-          }
-        }
-      })
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      });
 
-      res.status(201).json(user)
+      res.status(201).json(user);
     } catch (error) {
-      res.status(400).json(error)
+      res.status(400).json(error);
     }
-
   }
   async getAll(req: Request, res: Response) {
-    const users = await prisma.user.findMany()
-    res.status(200).json(users)
+    const users = await prisma.user.findMany();
+    res.status(200).json(users);
   }
 }
