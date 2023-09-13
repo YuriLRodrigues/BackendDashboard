@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import { router } from "./routes";
 import cors from "cors";
@@ -6,7 +6,7 @@ import cors from "cors";
 const app = express();
 
 app.use(express.json());
-app.use((request, response, next) => {
+app.use((request: Request, response: Response, next: NextFunction) => {
   response.header("Access-Control-Allow-Origin", "*");
   response.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
   next();
