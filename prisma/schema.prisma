@@ -17,16 +17,18 @@ model Finance {
 }
 
 model FinanceData {
-  id      String    @id @default(uuid()) @map("_id")
-  store   String
-  value   Float
-  month   String
-  day     String
-  year    String
-  hour    String
-  minutes String
-  payment String
-  finance Finance[]
+  id         String    @id @default(uuid()) @map("_id")
+  product    String?
+  store      String?
+  value      Float
+  month      String
+  day        String
+  year       String
+  hour       String
+  minutes    String
+  payment    String?
+  transation String?
+  finance    Finance[]
 }
 
 model User {
@@ -34,6 +36,9 @@ model User {
   email      String       @unique
   name       String
   password   String
+  account    String       @default(uuid())
+  balance    Float        @default(0)
+  cpf        String       @unique
   userAccess UserAccess[]
   Finance    Finance[]
   created_At DateTime     @default(now())
