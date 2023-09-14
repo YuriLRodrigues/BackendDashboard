@@ -84,7 +84,7 @@ export class UserController {
     res.status(200).json(users);
   }
   async findUser(req: Request, res: Response) {
-    const { email, password } = req.body;
+    const { email } = req.body;
 
     try {
       const user = await prisma.user.findUnique({
