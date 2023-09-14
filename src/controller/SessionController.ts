@@ -42,7 +42,7 @@ export class SessionController {
       }
 
       const token = sign({
-        userId: user.id, roles: user.userAccess.map(role=> role.Access?.name)
+        userId: user.id, roles: user.userAccess.map((role: any)=> role.Access?.name)
       }, MY_SECRET_KEY, {
         algorithm: "HS256",
         expiresIn: "24h"

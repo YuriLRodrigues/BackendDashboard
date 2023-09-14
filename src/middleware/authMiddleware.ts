@@ -45,7 +45,7 @@ export function AuthMiddleware (permissions?: string[]) {
           }
         })
 
-        const userPermissions = user?.userAccess.map((perm)=> perm.Access?.name) ?? []
+        const userPermissions = user?.userAccess.map((perm: any)=> perm.Access?.name) ?? []
 
         const hasPermissions = permissions.some((perm)=> userPermissions.includes(perm))
 
