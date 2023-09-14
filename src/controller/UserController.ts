@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../database/prismaClient";
-import { hash } from "bcrypt";
+import { compare, hash } from "bcrypt";
 
 export class UserController {
   async create(req: Request, res: Response) {
@@ -82,5 +82,41 @@ export class UserController {
   async getAll(req: Request, res: Response) {
     const users = await prisma.user.findMany();
     res.status(200).json(users);
+  }
+  async findUser(req: Request, res: Response) {
+    const { email, password } = req.body;
+
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          email,
+        },
+        include: {
+          userAccess: {
+            select: {
+              Access: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!user) {
+        return res.status(400).json({ error: "User not found" });
+      }
+
+      const passwordMatch = await compare(password, user.password);
+
+      if (!passwordMatch) {
+        return res.status(400).json({ error: "Invalid password" });
+      }
+
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(400).json(error);
+    }
   }
 }
