@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Finance {
+  id     String  @id @default(uuid()) @map("_id")
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  FinanceData   FinanceData? @relation(fields: [financeDataId], references: [id])
+  financeDataId String?
+}
+
+model FinanceData {
+  id         String    @id @default(uuid()) @map("_id")
+  product    String?
+  store      String?
+  value      Float
+  month      String
+  day        String
+  year       String
+  hour       String
+  minutes    String
+  payment    String?
+  transation String?
+  finance    Finance[]
+}
+
+model User {
+  id         String       @id @default(uuid()) @map("_id")
+  email      String       @unique
+  name       String
+  password   String
+  account    String       @default(uuid())
+  balance    Float        @default(0)
+  cpf        String       @unique
+  userAccess UserAccess[]
+  Finance    Finance[]
+  created_At DateTime     @default(now())
+  updated_At DateTime     @updatedAt
+}
+
+model UserAccess {
+  id         String   @id @default(uuid()) @map("_id")
+  User       User?    @relation(fields: [userId], references: [id])
+  userId     String?
+  Access     Access?  @relation(fields: [accessId], references: [id])
+  accessId   String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Access {
+  id         String       @id @default(uuid()) @map("_id")
+  name       String       @unique
+  userAccess UserAccess[]
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+}
