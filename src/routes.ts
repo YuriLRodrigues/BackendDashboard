@@ -22,7 +22,7 @@ router.post("/newaccess", AuthMiddleware(["adm"]), accessController.create);
 router.post("/user", userController.create);
 router.post("/newexpense", AuthMiddleware(["adm", "user"]), financeController.newExpense); 
 router.post("/newdeposit", AuthMiddleware(["adm", "user"]), financeController.newDeposit); 
-router.post("/finduser", userController.findUser); 
+router.post("/findmyuser", userController.findUser); 
 
 
 export { router };

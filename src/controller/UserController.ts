@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../database/prismaClient";
-import { compare, hash } from "bcrypt";
+import { hash } from "bcrypt";
 
 export class UserController {
   async create(req: Request, res: Response) {
@@ -91,16 +91,10 @@ export class UserController {
         where: {
           email,
         },
-        include: {
-          userAccess: {
-            select: {
-              Access: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          },
+        select: {
+          email: true,
+          password: true,
+          name: true,
         },
       });
 
