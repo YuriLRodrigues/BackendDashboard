@@ -108,12 +108,6 @@ export class UserController {
         return res.status(400).json({ error: "User not found" });
       }
 
-      const passwordMatch = await compare(password, user.password);
-
-      if (!passwordMatch) {
-        return res.status(400).json({ error: "Invalid password" });
-      }
-
       res.status(200).json(user);
     } catch (error) {
       res.status(400).json(error);
