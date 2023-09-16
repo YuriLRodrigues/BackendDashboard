@@ -16,6 +16,7 @@ router.get("/users", AuthMiddleware(["adm"]), userController.getAll);
 router.get("/myextracts", AuthMiddleware(["adm", "user"]), financeController.getExtracts);
 router.get("/mybalance", AuthMiddleware(["adm", "user"]), financeController.getBalance);
 router.get("/mytransactions", AuthMiddleware(["adm", "user"]), financeController.getTransations);
+router.get("/mydatauser", AuthMiddleware(["adm", "user"]), userController.allDataUser);
 
 router.post("/signin", sessionController.signIn);
 router.post("/newaccess", AuthMiddleware(["adm"]), accessController.create);
