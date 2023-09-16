@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../database/prismaClient";
 import { hash } from "bcrypt";
+import { UserRequest } from "../types/Auth";
 
 export class UserController {
   async create(req: Request, res: Response) {
@@ -105,6 +106,53 @@ export class UserController {
       res.status(200).json(user);
     } catch (error) {
       res.status(400).json(error);
+    }
+  }
+  async allDataUser(req: UserRequest, res: Response) {
+    try {
+      const userId = req.userId;
+
+      const userData = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+        select: {
+          account: true,
+          balance: true,
+          email: true,
+          id: true,
+          name: true,
+          Finance: {
+            select: {
+              FinanceData: {
+                select: {
+                  finance: true,
+                  day: true,
+                  hour: true,
+                  minutes: true,
+                  month: true,
+                  year: true,
+                  value: true,
+                  transation: true,
+                  payment: true,
+                  store: true,
+                  id: true,
+                  product: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!userData) {
+        return res.status(400).json({error: "User not found"})
+      }
+
+      return res.status(200).json(userData)
+
+    } catch (error) {
+      res.status(400).json({ error });
     }
   }
 }
