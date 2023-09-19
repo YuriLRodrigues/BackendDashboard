@@ -117,7 +117,8 @@ exports.Prisma.FinanceDataScalarFieldEnum = {
   hour: 'hour',
   minutes: 'minutes',
   payment: 'payment',
-  transation: 'transation'
+  transation: 'transation',
+  title: 'title'
 };
 
 exports.Prisma.UserScalarFieldEnum = {

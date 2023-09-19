@@ -2316,6 +2316,7 @@ export namespace Prisma {
     minutes: string | null
     payment: string | null
     transation: string | null
+    title: string | null
   }
 
   export type FinanceDataMaxAggregateOutputType = {
@@ -2330,6 +2331,7 @@ export namespace Prisma {
     minutes: string | null
     payment: string | null
     transation: string | null
+    title: string | null
   }
 
   export type FinanceDataCountAggregateOutputType = {
@@ -2344,6 +2346,7 @@ export namespace Prisma {
     minutes: number
     payment: number
     transation: number
+    title: number
     _all: number
   }
 
@@ -2368,6 +2371,7 @@ export namespace Prisma {
     minutes?: true
     payment?: true
     transation?: true
+    title?: true
   }
 
   export type FinanceDataMaxAggregateInputType = {
@@ -2382,6 +2386,7 @@ export namespace Prisma {
     minutes?: true
     payment?: true
     transation?: true
+    title?: true
   }
 
   export type FinanceDataCountAggregateInputType = {
@@ -2396,6 +2401,7 @@ export namespace Prisma {
     minutes?: true
     payment?: true
     transation?: true
+    title?: true
     _all?: true
   }
 
@@ -2497,6 +2503,7 @@ export namespace Prisma {
     minutes: string
     payment: string | null
     transation: string | null
+    title: string
     _count: FinanceDataCountAggregateOutputType | null
     _avg: FinanceDataAvgAggregateOutputType | null
     _sum: FinanceDataSumAggregateOutputType | null
@@ -2530,6 +2537,7 @@ export namespace Prisma {
     minutes?: boolean
     payment?: boolean
     transation?: boolean
+    title?: boolean
     finance?: boolean | FinanceData$financeArgs<ExtArgs>
     _count?: boolean | FinanceDataCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["financeData"]>
@@ -2546,6 +2554,7 @@ export namespace Prisma {
     minutes?: boolean
     payment?: boolean
     transation?: boolean
+    title?: boolean
   }
 
   export type FinanceDataInclude<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
@@ -2571,6 +2580,7 @@ export namespace Prisma {
       minutes: string
       payment: string | null
       transation: string | null
+      title: string
     }, ExtArgs["result"]["financeData"]>
     composites: {}
   }
@@ -3004,6 +3014,7 @@ export namespace Prisma {
     readonly minutes: FieldRef<"FinanceData", 'String'>
     readonly payment: FieldRef<"FinanceData", 'String'>
     readonly transation: FieldRef<"FinanceData", 'String'>
+    readonly title: FieldRef<"FinanceData", 'String'>
   }
     
 
@@ -6503,7 +6514,8 @@ export namespace Prisma {
     hour: 'hour',
     minutes: 'minutes',
     payment: 'payment',
-    transation: 'transation'
+    transation: 'transation',
+    title: 'title'
   };
 
   export type FinanceDataScalarFieldEnum = (typeof FinanceDataScalarFieldEnum)[keyof typeof FinanceDataScalarFieldEnum]
@@ -6688,6 +6700,7 @@ export namespace Prisma {
     minutes?: StringFilter<"FinanceData"> | string
     payment?: StringNullableFilter<"FinanceData"> | string | null
     transation?: StringNullableFilter<"FinanceData"> | string | null
+    title?: StringFilter<"FinanceData"> | string
     finance?: FinanceListRelationFilter
   }
 
@@ -6703,6 +6716,7 @@ export namespace Prisma {
     minutes?: SortOrder
     payment?: SortOrder
     transation?: SortOrder
+    title?: SortOrder
     finance?: FinanceOrderByRelationAggregateInput
   }
 
@@ -6721,6 +6735,7 @@ export namespace Prisma {
     minutes?: StringFilter<"FinanceData"> | string
     payment?: StringNullableFilter<"FinanceData"> | string | null
     transation?: StringNullableFilter<"FinanceData"> | string | null
+    title?: StringFilter<"FinanceData"> | string
     finance?: FinanceListRelationFilter
   }, "id">
 
@@ -6736,6 +6751,7 @@ export namespace Prisma {
     minutes?: SortOrder
     payment?: SortOrder
     transation?: SortOrder
+    title?: SortOrder
     _count?: FinanceDataCountOrderByAggregateInput
     _avg?: FinanceDataAvgOrderByAggregateInput
     _max?: FinanceDataMaxOrderByAggregateInput
@@ -6758,6 +6774,7 @@ export namespace Prisma {
     minutes?: StringWithAggregatesFilter<"FinanceData"> | string
     payment?: StringNullableWithAggregatesFilter<"FinanceData"> | string | null
     transation?: StringNullableWithAggregatesFilter<"FinanceData"> | string | null
+    title?: StringWithAggregatesFilter<"FinanceData"> | string
   }
 
   export type UserWhereInput = {
@@ -6997,6 +7014,7 @@ export namespace Prisma {
     minutes: string
     payment?: string | null
     transation?: string | null
+    title: string
     finance?: FinanceCreateNestedManyWithoutFinanceDataInput
   }
 
@@ -7012,6 +7030,7 @@ export namespace Prisma {
     minutes: string
     payment?: string | null
     transation?: string | null
+    title: string
     finance?: FinanceUncheckedCreateNestedManyWithoutFinanceDataInput
   }
 
@@ -7026,6 +7045,7 @@ export namespace Prisma {
     minutes?: StringFieldUpdateOperationsInput | string
     payment?: NullableStringFieldUpdateOperationsInput | string | null
     transation?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
     finance?: FinanceUpdateManyWithoutFinanceDataNestedInput
   }
 
@@ -7040,6 +7060,7 @@ export namespace Prisma {
     minutes?: StringFieldUpdateOperationsInput | string
     payment?: NullableStringFieldUpdateOperationsInput | string | null
     transation?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
     finance?: FinanceUncheckedUpdateManyWithoutFinanceDataNestedInput
   }
 
@@ -7055,6 +7076,7 @@ export namespace Prisma {
     minutes: string
     payment?: string | null
     transation?: string | null
+    title: string
   }
 
   export type FinanceDataUpdateManyMutationInput = {
@@ -7068,6 +7090,7 @@ export namespace Prisma {
     minutes?: StringFieldUpdateOperationsInput | string
     payment?: NullableStringFieldUpdateOperationsInput | string | null
     transation?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
   }
 
   export type FinanceDataUncheckedUpdateManyInput = {
@@ -7081,6 +7104,7 @@ export namespace Prisma {
     minutes?: StringFieldUpdateOperationsInput | string
     payment?: NullableStringFieldUpdateOperationsInput | string | null
     transation?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserCreateInput = {
@@ -7399,6 +7423,7 @@ export namespace Prisma {
     minutes?: SortOrder
     payment?: SortOrder
     transation?: SortOrder
+    title?: SortOrder
   }
 
   export type FinanceDataAvgOrderByAggregateInput = {
@@ -7417,6 +7442,7 @@ export namespace Prisma {
     minutes?: SortOrder
     payment?: SortOrder
     transation?: SortOrder
+    title?: SortOrder
   }
 
   export type FinanceDataMinOrderByAggregateInput = {
@@ -7431,6 +7457,7 @@ export namespace Prisma {
     minutes?: SortOrder
     payment?: SortOrder
     transation?: SortOrder
+    title?: SortOrder
   }
 
   export type FinanceDataSumOrderByAggregateInput = {
@@ -8017,6 +8044,7 @@ export namespace Prisma {
     minutes: string
     payment?: string | null
     transation?: string | null
+    title: string
   }
 
   export type FinanceDataUncheckedCreateWithoutFinanceInput = {
@@ -8031,6 +8059,7 @@ export namespace Prisma {
     minutes: string
     payment?: string | null
     transation?: string | null
+    title: string
   }
 
   export type FinanceDataCreateOrConnectWithoutFinanceInput = {
@@ -8095,6 +8124,7 @@ export namespace Prisma {
     minutes?: StringFieldUpdateOperationsInput | string
     payment?: NullableStringFieldUpdateOperationsInput | string | null
     transation?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
   }
 
   export type FinanceDataUncheckedUpdateWithoutFinanceInput = {
@@ -8108,6 +8138,7 @@ export namespace Prisma {
     minutes?: StringFieldUpdateOperationsInput | string
     payment?: NullableStringFieldUpdateOperationsInput | string | null
     transation?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
   }
 
   export type FinanceCreateWithoutFinanceDataInput = {
