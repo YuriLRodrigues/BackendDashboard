@@ -98,7 +98,7 @@ export class FinanceController {
     }
   }
   async newDeposit(req: UserRequest, res: Response) {
-    const { value, transation } = req.body;
+    const { value, transation, title } = req.body;
     const date = format(new Date(), "dd/MM/yyyy");
     const hours = format(new Date(), "HH:mm:ss");
     const [hour, minutes] = hours.split(":");
@@ -139,12 +139,14 @@ export class FinanceController {
               value,
               year,
               transation,
+              title
             },
           },
         },
         include: {
           FinanceData: {
             select: {
+              title: true,
               day: true,
               month: true,
               year: true,

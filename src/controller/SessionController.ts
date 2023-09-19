@@ -56,7 +56,7 @@ export class SessionController {
 
       const token = sign(
         {
-          userId: user.id,
+          sub: user.id,
           roles: user.userAccess.map((role: any) => role.Access?.name),
         },
         MY_SECRET_KEY,
