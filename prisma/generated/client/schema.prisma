@@ -29,7 +29,6 @@ model FinanceData {
   minutes    String
   payment    String?
   transation String?
-  title String
   finance    Finance[]
 }
 
