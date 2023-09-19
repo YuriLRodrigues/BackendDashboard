@@ -4,7 +4,7 @@ import { prisma } from "../database/prismaClient";
 import { UserRequest } from "../types/Auth";
 
 type DecodedToken = {
-  userId: string
+  sub: string
 }
 
 export function AuthMiddleware (permissions?: string[]) {
@@ -25,12 +25,13 @@ export function AuthMiddleware (permissions?: string[]) {
       }
 
       const decodedToken = verify(token, MY_SECRET_KEY) as DecodedToken
-      req.userId = decodedToken.userId
+      console.log(decodedToken.sub)
+      req.userId = decodedToken.sub
 
       if (permissions) {
         const user = await prisma.user.findUnique({
           where: {
-            id: decodedToken.userId
+            id: decodedToken.sub
           },
           include: {
             userAccess: {
@@ -44,10 +45,11 @@ export function AuthMiddleware (permissions?: string[]) {
             }
           }
         })
-
+        console.log(user)
         const userPermissions = user?.userAccess.map((perm: any)=> perm.Access?.name) ?? []
-
+        console.log(userPermissions)
         const hasPermissions = permissions.some((perm)=> userPermissions.includes(perm))
+        console.log(hasPermissions)
 
         if (!hasPermissions){
           res.status(403).json({error: "Insuficient permissions"})
