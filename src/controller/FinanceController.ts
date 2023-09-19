@@ -5,7 +5,7 @@ import { UserRequest } from "../types/Auth";
 
 export class FinanceController {
   async newExpense(req: UserRequest, res: Response) {
-    const { payment, store, value, transation, product } = req.body;
+    const { payment, store, value, transation, product, title } = req.body;
     const date = format(new Date(), "dd/MM/yyyy");
     const hours = format(new Date(), "HH:mm:ss");
     const [hour, minutes] = hours.split(":");
@@ -40,6 +40,7 @@ export class FinanceController {
           FinanceData: {
             create: {
               product,
+              title,
               day,
               hour,
               minutes,
@@ -65,6 +66,7 @@ export class FinanceController {
               store: true,
               value: true,
               transation: true,
+              title: true
             },
           },
           User: {
@@ -139,7 +141,7 @@ export class FinanceController {
               value,
               year,
               transation,
-              title
+              title,
             },
           },
         },
@@ -213,16 +215,15 @@ export class FinanceController {
               hour: true,
               minutes: true,
               transation: true,
-            }
-          }
-        }
+            },
+          },
+        },
       });
 
       return res.json({
         message: `Nova entrada adicionada, seu saldo atual é de R$ ${findUserBalance?.balance}`,
         financeUpdated,
       });
-
     } catch (error) {
       res.status(400).json(error);
     }
@@ -269,6 +270,10 @@ export class FinanceController {
               year: true,
               value: true,
               id: true,
+              title:true,
+              store:true,
+              payment: true,
+              product:true
             },
           },
         },
