@@ -108,6 +108,7 @@ export class FinanceController {
     const userId = req.userId;
 
     try {
+
       const userBalance = await prisma.user.findUnique({
         where: {
           id: userId,
@@ -123,6 +124,59 @@ export class FinanceController {
 
       if (!userBalance) {
         res.status(400).json({ error: "User and balance not found" });
+      }
+      const financeDayExist = await prisma.finance.findFirst({
+        where: {
+          FinanceData: {
+            day, month, year
+          },
+          User: {
+            id: userId
+          }
+        },
+        select: {
+          FinanceData: {
+            select: {
+              id: true
+            }
+          }
+        }
+      })
+      if (financeDayExist) {
+        await prisma.financeData.update({
+          where: {
+            id: financeDayExist.FinanceData?.id
+          },
+          data: {
+            value: {
+              increment: value
+            }
+          }
+        })
+        const findUserBalance = await prisma.user.update({
+          where: {
+            id: userId,
+          },
+          data: {
+            balance: {
+              increment: value,
+            },
+          },
+          select: {
+            balance: true,
+            Finance: {
+              select: {
+                FinanceData: {
+                  where: {
+                    id: financeDayExist.FinanceData?.id,
+                  },
+                },
+              },
+            },
+          },
+        });
+        console.log("financedayexist: ", financeDayExist)
+        return res.status(200).json({message: `Sua carteira foi atualizada, seu saldo atual é de: R$ ${findUserBalance.balance} `, findUserBalance})
       }
 
       const userFinance = await prisma.finance.create({
