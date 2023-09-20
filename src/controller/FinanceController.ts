@@ -100,9 +100,9 @@ export class FinanceController {
     }
   }
   async newDeposit(req: UserRequest, res: Response) {
-    const { value, transation, title } = req.body;
-    const date = format(new Date(), "dd/MM/yyyy");
-    const hours = format(new Date(), "HH:mm:ss");
+    const { value, transation, title, date } = req.body;
+    const dateFormat = format(date, "dd/MM/yyyy");
+    const hours = format(date, "HH:mm:ss");
     const [hour, minutes] = hours.split(":");
     const [day, month, year] = date.split("/");
     const userId = req.userId;
