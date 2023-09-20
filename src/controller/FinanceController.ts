@@ -104,7 +104,7 @@ export class FinanceController {
     const dateFormat = format(date, "dd/MM/yyyy");
     const hours = format(date, "HH:mm:ss");
     const [hour, minutes] = hours.split(":");
-    const [day, month, year] = date.split("/");
+    const [day, month, year] = dateFormat.split("/");
     const userId = req.userId;
 
     try {
