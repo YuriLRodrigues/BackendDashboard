@@ -5,11 +5,11 @@ import { UserRequest } from "../types/Auth";
 
 export class FinanceController {
   async newExpense(req: UserRequest, res: Response) {
-    const { payment, store, value, transation, product, title } = req.body;
-    const date = format(new Date(), "dd/MM/yyyy");
+    const { payment, store, value, transation, product, title, date } = req.body;
+    const formatDate = format(date, "yyy/MM/dd");
     const hours = format(new Date(), "HH:mm:ss");
     const [hour, minutes] = hours.split(":");
-    const [day, month, year] = date.split("/");
+    const [day, month, year] = formatDate.split("/");
     const userId = req.userId;
 
     try {
@@ -101,7 +101,7 @@ export class FinanceController {
   }
   async newDeposit(req: UserRequest, res: Response) {
     const { value, transation, title, date } = req.body;
-    const dateFormat = format(date, "dd/MM/yyyy");
+    const dateFormat = format(date, "yyyy/MM/dd");
     const hours = format(date, "HH:mm:ss");
     const [hour, minutes] = hours.split(":");
     const [day, month, year] = dateFormat.split("/");
