@@ -157,7 +157,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/rzz/MyProjectsLinux/BackendDashboard/prisma/generated/client",
+      "value": "/home/rzz7/MyProjects/BackendDashboard/prisma/generated/client",
       "fromEnvVar": null
     },
     "config": {

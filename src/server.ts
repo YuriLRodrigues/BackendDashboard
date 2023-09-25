@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import { router } from "./routes";
 import cors from "cors";
+dotenv.config();
 
 const app = express();
 
@@ -18,7 +19,6 @@ app.use(
   })
 );
 app.use(router);
-dotenv.config();
 
 const port = process.env.PORT || 8080;
 

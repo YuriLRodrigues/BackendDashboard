@@ -1,10 +1,10 @@
 import { NextFunction, Response } from "express";
-import { verify } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { prisma } from "../database/prismaClient";
 import { UserRequest } from "../types/Auth";
 
 type DecodedToken = {
-  sub: string
+  id: string
 }
 
 export function AuthMiddleware (permissions?: string[]) {
@@ -18,20 +18,21 @@ export function AuthMiddleware (permissions?: string[]) {
     const token = authHeader.split(" ")[1].trim()
 
     try {
-      const MY_SECRET_KEY = process.env.SECRET
 
+      const MY_SECRET_KEY = process.env.SECRET
+      console.log("mysecret: ", MY_SECRET_KEY)
       if (!MY_SECRET_KEY){
         throw new Error("Invalid secret key")
       }
 
-      const decodedToken = verify(token, MY_SECRET_KEY) as DecodedToken
-      console.log(decodedToken.sub)
-      req.userId = decodedToken.sub
+      const decodedToken = jwt.verify(token, "MY_SECRET_KEY") as DecodedToken
+      console.log("decodedtoken: ", decodedToken)
+      req.userId = decodedToken.id
 
       if (permissions) {
         const user = await prisma.user.findUnique({
           where: {
-            id: decodedToken.sub
+            id: decodedToken.id
           },
           include: {
             userAccess: {

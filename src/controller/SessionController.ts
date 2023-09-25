@@ -48,7 +48,8 @@ export class SessionController {
         userAccess: user.userAccess,
       };
 
-      const MY_SECRET_KEY = process.env.SECRET;
+
+      const MY_SECRET_KEY = process.env.SECRET
 
       if (!MY_SECRET_KEY) {
         return res.status(400).json({ error: "Invalid secret key" });
@@ -56,7 +57,7 @@ export class SessionController {
 
       const token = sign(
         {
-          sub: user.id,
+          id: user.id,
           roles: user.userAccess.map((role: any) => role.Access?.name),
         },
         MY_SECRET_KEY,
