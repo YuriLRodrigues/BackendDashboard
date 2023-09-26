@@ -21,6 +21,7 @@ O FinanceFlow é uma plataforma de gerenciamento financeiro, o backend foi const
   <img width=40 src="https://walde.co/wp-content/uploads/2016/09/nodejs_logo.png" alt="Nodejs" />
   <img width=40 src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/512px-Typescript_logo_2020.svg.png" alt="Typescript" />
   <img width=40 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLA972a1NXwGHTIpgjxpRdu1DD5te1evggDgjNvM_FcbtGxaPYrHbV27RNzJSA_ZhrY28&usqp=CAU" alt="Express" />
+  <img width=40 src="https://w7.pngwing.com/pngs/956/695/png-transparent-mongodb-original-wordmark-logo-icon-thumbnail.png" alt="Express" />
 </div>
 
 <h3>Bibliotecas</h3>
