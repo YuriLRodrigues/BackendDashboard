@@ -16,7 +16,7 @@ O FinanceFlow é uma plataforma de gerenciamento financeiro, o backend foi const
 
 <h3 style="color:cyan">Tecnologias Principais:</h3>
 
-<div style="display:flex;gap:10px">
+<div style="display:flex;gap:20px">
   <img width=40 src="https://d2eip9sf3oo6c2.cloudfront.net/tags/images/000/001/287/square_480/prismaHD.png" alt="Prisma" />
   <img width=40 src="https://walde.co/wp-content/uploads/2016/09/nodejs_logo.png" alt="Nodejs" />
   <img width=40 src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/512px-Typescript_logo_2020.svg.png" alt="Typescript" />
