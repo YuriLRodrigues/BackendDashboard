@@ -1,16 +1,18 @@
 import { Response } from "express";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { prisma } from "../database/prismaClient";
 import { UserRequest } from "../types/Auth";
 
 export class FinanceController {
   async newExpense(req: UserRequest, res: Response) {
-    const { payment, store, value, transation, product, title, date } = req.body;
-    const formatDate = format(date, "yyy/MM/dd");
-    const hours = format(new Date(), "HH:mm:ss");
-    const [hour, minutes] = hours.split(":");
-    const [day, month, year] = formatDate.split("/");
-    const userId = req.userId;
+    const { payment, store, value, transation, product, title, date } =
+      req.body;
+      const dateNotString = parseISO(date)
+      const dateFormat = format(dateNotString, "yyyy/MM/dd");
+      const hours = format(dateNotString, "HH:mm:ss");
+      const [hour, minutes] = hours.split(":");
+      const [day, month, year] = dateFormat.split("/");
+      const userId = req.userId;
 
     try {
       const userBalance = await prisma.user.findUnique({
@@ -66,7 +68,7 @@ export class FinanceController {
               store: true,
               value: true,
               transation: true,
-              title: true
+              title: true,
             },
           },
           User: {
@@ -101,14 +103,14 @@ export class FinanceController {
   }
   async newDeposit(req: UserRequest, res: Response) {
     const { value, transation, title, date } = req.body;
-    const dateFormat = format(date, "yyyy/MM/dd");
-    const hours = format(date, "HH:mm:ss");
+    const dateNotString = parseISO(date)
+    const dateFormat = format(dateNotString, "yyyy/MM/dd");
+    const hours = format(dateNotString, "HH:mm:ss");
     const [hour, minutes] = hours.split(":");
     const [day, month, year] = dateFormat.split("/");
     const userId = req.userId;
 
     try {
-
       const userBalance = await prisma.user.findUnique({
         where: {
           id: userId,
@@ -128,31 +130,33 @@ export class FinanceController {
       const financeDayExist = await prisma.finance.findFirst({
         where: {
           FinanceData: {
-            day, month, year
+            day,
+            month,
+            year,
           },
           User: {
-            id: userId
-          }
+            id: userId,
+          },
         },
         select: {
           FinanceData: {
             select: {
-              id: true
-            }
-          }
-        }
-      })
+              id: true,
+            },
+          },
+        },
+      });
       if (financeDayExist) {
         await prisma.financeData.update({
           where: {
-            id: financeDayExist.FinanceData?.id
+            id: financeDayExist.FinanceData?.id,
           },
           data: {
             value: {
-              increment: value
-            }
-          }
-        })
+              increment: value,
+            },
+          },
+        });
         const findUserBalance = await prisma.user.update({
           where: {
             id: userId,
@@ -175,8 +179,13 @@ export class FinanceController {
             },
           },
         });
-        console.log("financedayexist: ", financeDayExist)
-        return res.status(200).json({message: `Sua carteira foi atualizada, seu saldo atual é de: R$ ${findUserBalance.balance} `, findUserBalance})
+        
+        return res
+          .status(200)
+          .json({
+            message: `Sua carteira foi atualizada, seu saldo atual é de: R$ ${findUserBalance.balance} `,
+            findUserBalance,
+          });
       }
 
       const userFinance = await prisma.finance.create({
@@ -324,10 +333,10 @@ export class FinanceController {
               year: true,
               value: true,
               id: true,
-              title:true,
-              store:true,
+              title: true,
+              store: true,
               payment: true,
-              product:true
+              product: true,
             },
           },
         },
