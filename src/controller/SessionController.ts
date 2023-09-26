@@ -48,7 +48,6 @@ export class SessionController {
         userAccess: user.userAccess,
       };
 
-
       const MY_SECRET_KEY = process.env.SECRET
 
       if (!MY_SECRET_KEY) {
@@ -57,7 +56,7 @@ export class SessionController {
 
       const token = sign(
         {
-          id: user.id,
+          sub: user.id,
           roles: user.userAccess.map((role: any) => role.Access?.name),
         },
         MY_SECRET_KEY,
