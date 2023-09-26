@@ -1,11 +1,7 @@
 import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
 import { prisma } from "../database/prismaClient";
-import { UserRequest } from "../types/Auth";
-
-type DecodedToken = {
-  id: string
-}
+import { DecodedToken, UserRequest } from "../types/Auth";
 
 export function AuthMiddleware (permissions?: string[]) {
   return async (req: UserRequest, res: Response, next: NextFunction) => {
@@ -20,19 +16,18 @@ export function AuthMiddleware (permissions?: string[]) {
     try {
 
       const MY_SECRET_KEY = process.env.SECRET
-      console.log("mysecret: ", MY_SECRET_KEY)
+
       if (!MY_SECRET_KEY){
         throw new Error("Invalid secret key")
       }
 
-      const decodedToken = jwt.verify(token, "MY_SECRET_KEY") as DecodedToken
-      console.log("decodedtoken: ", decodedToken)
-      req.userId = decodedToken.id
+      const decodedToken = jwt.verify(token, MY_SECRET_KEY) as DecodedToken
+      req.userId = decodedToken.sub
 
       if (permissions) {
         const user = await prisma.user.findUnique({
           where: {
-            id: decodedToken.id
+            id: decodedToken.sub
           },
           include: {
             userAccess: {
@@ -46,11 +41,9 @@ export function AuthMiddleware (permissions?: string[]) {
             }
           }
         })
-        console.log(user)
+
         const userPermissions = user?.userAccess.map((perm: any)=> perm.Access?.name) ?? []
-        console.log(userPermissions)
         const hasPermissions = permissions.some((perm)=> userPermissions.includes(perm))
-        console.log(hasPermissions)
 
         if (!hasPermissions){
           res.status(403).json({error: "Insuficient permissions"})
