@@ -179,7 +179,7 @@ export class FinanceController {
             },
           },
         });
-        
+
         return res
           .status(200)
           .json({
@@ -287,6 +287,7 @@ export class FinanceController {
         message: `Nova entrada adicionada, seu saldo atual é de R$ ${findUserBalance?.balance}`,
         financeUpdated,
       });
+      
     } catch (error) {
       res.status(400).json(error);
     }
